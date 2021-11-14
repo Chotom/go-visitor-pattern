@@ -1,5 +1,7 @@
 package binary_expression_tree
 
+import "fmt"
+
 // Visitor defines the interface for Visitors that operate on tree nodes
 type Visitor interface {
 	VisitBinaryOperatorNode(BinaryOperatorNode)
@@ -25,4 +27,26 @@ func (i *InFixVisitor) VisitNumericNode(node NumericNode) {
 
 func (i *InFixVisitor) Result() string {
 	return i.result
+}
+
+type EvaluateVisitor struct {
+	result int
+}
+
+func (e *EvaluateVisitor) VisitBinaryOperatorNode(node BinaryOperatorNode) {
+	node.Left().Accept(e)
+	leftValue := e.result
+
+	node.Right().Accept(e)
+	rightValue := e.result
+
+	e.result = node.Compute(leftValue, rightValue)
+}
+
+func (e *EvaluateVisitor) VisitNumericNode(node NumericNode) {
+	e.result = node.Value()
+}
+
+func (e *EvaluateVisitor) Result() string {
+	return fmt.Sprintf("%d", e.result)
 }
