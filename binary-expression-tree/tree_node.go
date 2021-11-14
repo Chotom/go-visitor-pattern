@@ -2,7 +2,7 @@ package binary_expression_tree
 
 import "fmt"
 
-//VisitableTreeNode  defines the interface for tree nodes that can accept Visitor.
+//VisitableTreeNode defines the interface for tree nodes that can accept Visitor.
 type VisitableTreeNode interface {
 	TreeNode
 	Visitable
@@ -20,8 +20,8 @@ type TreeNode interface {
 
 //BinaryParent defines the interface for node with two children.
 type BinaryParent interface {
-	Left() TreeNode
-	Right() TreeNode
+	Left() VisitableTreeNode
+	Right() VisitableTreeNode
 }
 
 //OperatorNode defines the interface for parent nodes with binary operator expression.
@@ -54,15 +54,15 @@ func (n *NumericNode) Value() int {
 
 //ParentNode represents a node with two children.
 type ParentNode struct {
-	left  TreeNode
-	right TreeNode
+	left  VisitableTreeNode
+	right VisitableTreeNode
 }
 
-func (b *ParentNode) Left() TreeNode {
+func (b *ParentNode) Left() VisitableTreeNode {
 	return b.left
 }
 
-func (b *ParentNode) Right() TreeNode {
+func (b *ParentNode) Right() VisitableTreeNode {
 	return b.right
 }
 
@@ -84,7 +84,7 @@ type AdditionNode struct {
 	ParentNode
 }
 
-func NewAdditionNode(left, right TreeNode) *AdditionNode {
+func NewAdditionNode(left, right VisitableTreeNode) *AdditionNode {
 	return &AdditionNode{
 		ParentNode: ParentNode{left: left, right: right},
 	}
@@ -103,7 +103,7 @@ type SubtractionNode struct {
 	ParentNode
 }
 
-func NewSubtractionNode(left, right TreeNode) *SubtractionNode {
+func NewSubtractionNode(left, right VisitableTreeNode) *SubtractionNode {
 	return &SubtractionNode{
 		ParentNode: ParentNode{left: left, right: right},
 	}
@@ -122,7 +122,7 @@ type MultiplicationNode struct {
 	ParentNode
 }
 
-func NewMultiplicationNode(left, right TreeNode) *MultiplicationNode {
+func NewMultiplicationNode(left, right VisitableTreeNode) *MultiplicationNode {
 	return &MultiplicationNode{
 		ParentNode: ParentNode{left: left, right: right},
 	}
@@ -141,7 +141,7 @@ type DivisionNode struct {
 	ParentNode
 }
 
-func NewDivisionNode(left, right TreeNode) *DivisionNode {
+func NewDivisionNode(left, right VisitableTreeNode) *DivisionNode {
 	return &DivisionNode{
 		ParentNode: ParentNode{left: left, right: right},
 	}
