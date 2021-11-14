@@ -154,3 +154,22 @@ func (a *DivisionNode) Compute(left int, right int) int {
 func (a *DivisionNode) GetLabel() string {
 	return "/"
 }
+
+//ModuloNode represents a node with '/' operator expression.
+type ModuloNode struct {
+	ParentNode
+}
+
+func NewModuloNode(left, right VisitableTreeNode) *ModuloNode {
+	return &ModuloNode{
+		ParentNode: ParentNode{left: left, right: right},
+	}
+}
+
+func (a *ModuloNode) Compute(left int, right int) int {
+	return left % right
+}
+
+func (a *ModuloNode) GetLabel() string {
+	return "%"
+}

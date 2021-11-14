@@ -17,6 +17,7 @@ func NewParser() *Parser {
 		operatorPriority: map[string]int{
 			"*": 2,
 			"/": 2,
+			"%": 2,
 			"+": 1,
 			"-": 1,
 		},
@@ -111,6 +112,8 @@ func (p *Parser) binaryOperatorNodeFactory(operator string, left, right Visitabl
 		node = NewMultiplicationNode(left, right)
 	case "/":
 		node = NewDivisionNode(left, right)
+	case "%":
+		node = NewModuloNode(left, right)
 	case "-":
 		node = NewSubtractionNode(left, right)
 	case "+":
