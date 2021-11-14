@@ -13,3 +13,17 @@ func TestParser_ParseWithUnknownOperator(t *testing.T) {
 	// then
 	assert.Nil(t, err)
 }
+
+func TestInFixVisitor_Result(t *testing.T) {
+	// given
+	parser := NewParser()
+	visitor := InFixVisitor{}
+	rootNode, err := parser.Parse("1 + ( 2 - 3 * 4 ) / 5")
+
+	//when
+	rootNode.Accept(&visitor)
+
+	// then
+	assert.Nil(t, err)
+	assert.Equal(t, "(1 + ((2 - (3 * 4)) / 5))", visitor.Result())
+}
