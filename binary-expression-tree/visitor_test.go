@@ -28,6 +28,20 @@ func TestInFixVisitor_Result(t *testing.T) {
 	assert.Equal(t, "(1 + ((2 - (3 * 4)) / 5))", visitor.Result())
 }
 
+func TestPostFixVisitor_Result(t *testing.T) {
+	// given
+	parser := NewParser()
+	visitor := PostFixVisitor{}
+	rootNode, err := parser.Parse("1 + ( 2 - 3 * 4 ) / 5")
+
+	//when
+	rootNode.Accept(&visitor)
+
+	// then
+	assert.Nil(t, err)
+	assert.Equal(t, "1 2 3 4 * - 5 / +", visitor.Result())
+}
+
 func TestEvaluateVisitor_Result(t *testing.T) {
 	// given
 	parser := NewParser()
