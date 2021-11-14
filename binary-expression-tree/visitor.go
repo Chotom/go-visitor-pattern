@@ -50,6 +50,27 @@ func (i *PostFixVisitor) Result() string {
 	return i.result
 }
 
+//PreFixVisitor represents visitor that operate on tree node and save expression in PreFix form
+type PreFixVisitor struct {
+	result string
+}
+
+func (i *PreFixVisitor) VisitBinaryOperatorNode(node BinaryOperatorNode) {
+	i.result += node.GetLabel() + " "
+	node.Left().Accept(i)
+	i.result += " "
+	node.Right().Accept(i)
+
+}
+
+func (i *PreFixVisitor) VisitNumericNode(node NumericNode) {
+	i.result += node.GetLabel()
+}
+
+func (i *PreFixVisitor) Result() string {
+	return i.result
+}
+
 //EvaluateVisitor represents visitor that operate on tree node and calculate result of expression
 type EvaluateVisitor struct {
 	result int
